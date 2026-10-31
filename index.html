@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -557,7 +556,7 @@ footer a {
 
 <!-- BIRTHDAY MUSIC -->
 <audio id="birthdayMusic" loop preload="auto">
-    <source src="./leberch-happy-birthday-581704.mp3" type="audio/mpeg">
+    <source src="https://lakshanan0118.github.io/BIRTHDAY/leberch-happy-birthday-581704.mp3" type="audio/mpeg">
 </audio>
 
 <div id="musicStatus">A little birthday melody awaits ♡</div>
@@ -1324,11 +1323,17 @@ const birthdayMusic = document.getElementById("birthdayMusic");
 const musicButton = document.getElementById("musicButton");
 const musicStatus = document.getElementById("musicStatus");
 
+// Load the audio file
+birthdayMusic.load();
+
+// Play or pause music when the button is clicked
 async function toggleMusic() {
 
     if (birthdayMusic.paused) {
 
         try {
+
+            musicStatus.innerText = "Loading your birthday melody... ♡";
 
             await birthdayMusic.play();
 
@@ -1337,7 +1342,10 @@ async function toggleMusic() {
 
         } catch (error) {
 
-            musicStatus.innerText = "Couldn't load music. Check the MP3 file.";
+            console.error("Music playback error:", error);
+
+            musicStatus.innerText =
+                "Music could not play. Please try again ♡";
 
         }
 
@@ -1352,9 +1360,29 @@ async function toggleMusic() {
 
 }
 
+// Update the button when music starts
+birthdayMusic.addEventListener("play", () => {
+
+    musicButton.innerHTML = "♫";
+    musicStatus.innerText = "Playing your birthday melody ✨";
+
+});
+
+// Update the button when music pauses
+birthdayMusic.addEventListener("pause", () => {
+
+    musicButton.innerHTML = "♪";
+    musicStatus.innerText = "Music paused ♡";
+
+});
+
+// Show an error if the audio file cannot load
 birthdayMusic.addEventListener("error", () => {
 
-    musicStatus.innerText = "Please check your birthday music file.";
+    console.error("Audio file error:", birthdayMusic.error);
+
+    musicStatus.innerText =
+        "Unable to load birthday music. Please check the audio file.";
 
 });
 
